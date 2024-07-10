@@ -6,6 +6,9 @@
   const handleToList = () => {
     router.push("/list");
   };
+  const handleToRefresh = () =>{
+    router.push("/refresh");
+  }
   const handleToOrder = () => {
     router.push("/table");
   };
@@ -14,6 +17,7 @@
 <template>
   <div class="function">
     <button class="list" @click="handleToList">跳转虚拟列表页面</button>
+    <button class="refresh" @click="handleToRefresh">跳转触底加载页面</button>
     <button class="order" @click="handleToOrder">跳转点餐页面</button>
   </div>
 </template>
@@ -28,7 +32,10 @@
     align-items: center;
     flex-direction: column;
     border-radius: 50px;
+    margin-top: -20px;
+
     .list,
+    .refresh,
     .order {
       width: 150px;
       height: 30px;
@@ -37,7 +44,7 @@
       font-size: 12px;
       border-radius: 5px;
     }
-    .order {
+    .order,.refresh {
       display: block;
       margin-top: 50px;
     }

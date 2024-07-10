@@ -25,6 +25,11 @@ const routes = [
     name: "虚拟列表",
     component: () => import("../views/list/index.vue"),
   },
+  {
+    path: "/refresh",
+    name: "触底刷新页面",
+    component: () => import("../views/refresh/index.vue"),
+  },
 ];
 
 const router = createRouter({
