@@ -13,10 +13,13 @@
       跳转虚拟列表页面
     </button>
     <button class="list_extend" @click="handleToPage('/list_extend')">
-      跳转虚拟列表拓展页面
+      跳转时间分片页面
     </button>
     <button class="refresh" @click="handleToPage('/refresh')">
       跳转触底加载页面
+    </button>
+    <button class="order" @click="handleToPage('/upload_files')">
+      跳转大文件上传页面
     </button>
     <button class="order" @click="handleToPage('/table')">跳转点餐页面</button>
   </div>
@@ -24,8 +27,8 @@
 
 <style scoped lang="less">
   .function {
-    width: 300px;
-    height: 300px;
+    width: 500px;
+    height: 700px;
     border: 1px solid red;
     display: flex;
     justify-content: center;

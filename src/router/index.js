@@ -35,6 +35,11 @@ const routes = [
     component: () => import("@/views/list_extend/index.vue"),
   },
   {
+    path: "/upload_files",
+    name: "大文件上传",
+    component: () => import("@/views/upload_files/index.vue"),
+  },
+  {
     path: "/refresh",
     name: "触底刷新页面",
     component: () => import("@/views/refresh/index.vue"),
