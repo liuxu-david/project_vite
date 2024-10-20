@@ -1,8 +1,16 @@
 import request from "./index";
-export const uploadChunk = (data) => {
+
+export const uploadChunks = (data) => {
   return request({
     url: "/api/upload",
     method: "POST",
-    data: data,
+    data,
+  });
+};
+export const mergeChunks = (data) => {
+  return request({
+    url: "/api/merge",
+    method: "POST",
+    data,
   });
 };

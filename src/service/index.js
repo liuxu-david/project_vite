@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: import.meta.env.VUE_APP_URL,
-  timeout: 5000,
+  timeout: 50000,
 });
 
 // 添加请求拦截器
@@ -21,7 +21,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     // 对响应数据做点什么
-    return response.data;
+    return response;
   },
   (error) => {
     // 对响应错误做点什么
