@@ -21,7 +21,9 @@
     <button class="order" @click="handleToPage('/upload_files')">
       跳转大文件上传页面
     </button>
-    <button class="order" @click="handleToPage('/table')">跳转点餐页面</button>
+    <button class="order" @click="handleToPage('/components')">
+      跳转组件封装页面
+    </button>
   </div>
 </template>
 
@@ -40,7 +42,8 @@
     .list,
     .list_extend,
     .refresh,
-    .order {
+    .order,
+    .components {
       width: 200px;
       height: 30px;
       background-color: green;

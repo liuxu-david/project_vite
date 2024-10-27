@@ -11,9 +11,9 @@ const routes = [
     component: () => import("@/views/home/index.vue"),
   },
   {
-    path: "/table",
-    name: "桌子",
-    component: () => import("@/views/table/index.vue"),
+    path: "/components",
+    name: "封装组件页面",
+    component: () => import("@/views/my_components/index.vue"),
   },
   {
     path: "/foods",

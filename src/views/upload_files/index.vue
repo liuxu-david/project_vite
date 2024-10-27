@@ -1,8 +1,9 @@
 <script setup>
   import { reactive, ref } from "vue";
   import SparkMD5 from "spark-md5";
-  import { uploadChunks, mergeChunks } from "@/service/upload.js";
+  import { verifyChunks, uploadChunks, mergeChunks } from "@/service/upload.js";
 
+  const inputRef = ref("");
   const fileList = reactive([]); //分片后的数组
   const fileSize = ref(1 * 1024 * 1024); //1m/片
   const fileHash = ref(""); //文件hash值 为了后续文件合并
@@ -36,6 +37,28 @@
         resolve(targetHash);
       };
     });
+  };
+  // 检查切片 秒传，断点续传
+  const handleVerifyChunks = async (chunks) => {
+    try {
+      const { code, msg, data } = await verifyChunks({
+        fileName: fileName.value,
+        fileHash: fileHash.value,
+      });
+      console.log("msg", msg);
+      if (code === 206) {
+        data.forEach((chunkIndex) => {
+          chunks[Number(chunkIndex)].uploaded = true;
+        });
+        return chunks.filter((chunk) => !chunk.uploaded);
+      } else if (code === 404) {
+        return chunks;
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   // 处理上传分片
   // 单个分片的上传
@@ -88,11 +111,13 @@
   // 分片上传完毕处理合并
   const handleMergeChunks = async () => {
     try {
-      const result = await mergeChunks({
+      const data = {
         chunkHash: fileHash.value,
         fileName: fileName.value,
         chunksNumber: fileList.length,
-      });
+      };
+      console.log("******data", data);
+      const result = await mergeChunks(data);
       return result;
     } catch (err) {
       console.log("上传失败", err);
@@ -102,18 +127,24 @@
   const handleUpload = async (event) => {
     try {
       const file = event.target.files[0];
+      console.log("******file", event.target.files);
+
       fileName.value = file.name;
       // 获取文件hash
       fileHash.value = await handleFileHash(file);
       // 处理切片
       const chunks = handleChunks(file);
-      // 上传切片
-      const result = await handleUploadChunks(chunks);
-      console.log("切片上传成功", result);
-
-      // 合并切片
-      await handleMergeChunks();
-      console.log("大文件上传成功");
+      // 检验文切片是否已经存在
+      const verifyChunksResult = await handleVerifyChunks(chunks);
+      console.log("检查切片结果", verifyChunksResult);
+      if (verifyChunksResult.length) {
+        // 上传切片
+        const result = await handleUploadChunks(verifyChunksResult);
+        console.log("切片上传成功", result);
+        // 合并切片
+        await handleMergeChunks();
+        console.log("大文件上传成功");
+      }
     } catch (error) {
       console.log("大文件上传失败");
     }
@@ -121,7 +152,7 @@
 </script>
 
 <template>
-  <input type="file" @change="handleUpload" />
+  <input type="file" @change="handleUpload" ref="inputRef" />
 </template>
 
 <style scoped></style>
