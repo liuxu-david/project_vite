@@ -2,7 +2,7 @@ import request from "./index";
 
 export const verifyChunks = (data) => {
   return request({
-    url: "api/verify",
+    url: "/api/upload/verify",
     method: "POST",
     data,
   });
@@ -10,14 +10,14 @@ export const verifyChunks = (data) => {
 
 export const uploadChunks = (data) => {
   return request({
-    url: "/api/upload",
+    url: "/api/upload/upload",
     method: "POST",
     data,
   });
 };
 export const mergeChunks = (data) => {
   return request({
-    url: "/api/merge",
+    url: "/api/upload/merge",
     method: "POST",
     data,
   });

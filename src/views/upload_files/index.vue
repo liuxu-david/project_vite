@@ -45,7 +45,7 @@
         fileName: fileName.value,
         fileHash: fileHash.value,
       });
-      console.log("msg", msg);
+      console.log("msg", msg, code, data);
       if (code === 206) {
         data.forEach((chunkIndex) => {
           chunks[Number(chunkIndex)].uploaded = true;
