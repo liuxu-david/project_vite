@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig,loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 import AutoImport from "unplugin-auto-import/vite";
@@ -6,11 +6,12 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
-  console.log(command, __dirname);
+export default defineConfig(({ mode }) => {
+  const env =  loadEnv(mode, process.cwd());
+  console.log(mode, __dirname, env);
   return {
     // 共享配置
-    mode: "development", //配置开发模式
+    //mode: "development", //配置开发模式
     define: {
       //定义全局常量
       _APP_VERSION: JSON.stringify("v1.0.0"),
@@ -43,17 +44,18 @@ export default defineConfig(({ command }) => {
         //为服务配置自定义代理规则
         //配置代理，解决常见跨域问题
         "/api": {
-          target: "http://localhost:5000", //将/api开头的请求转发到这个地址上
+          target: env.VITE_APP_URL, //将/api开头的请求转发到这个地址上
           changeOrigin: true, //是否需要修改请求头的origin值，避免后端设置origin限制引起跨域问题
           //rewrite: (path) => path.replace(/^\/api/, "/api"), //重写请求路径，这里/api/user会被转发到/user路径上
         },
       },
     },
+    base:'./',
     // 构建配置
     build: {
       target: "modules", //最终构建的浏览器兼容目标,默认modules
       outDir: "dist", //自定义输出目录,默认dist
-      assetsDir: "build", //自定义静态资源目录
+      //assetsDir: "build", //自定义静态资源目录
       sourcemap: true, //是否生成sourcemap文件，默认false
       emptyOutDir: true, //构建时清理输出目录,如果输出目录在根目录下则默认为true
     },

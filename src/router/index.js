@@ -16,9 +16,9 @@ const routes = [
     component: () => import("@/views/my_components/index.vue"),
   },
   {
-    path: "/foods",
-    name: "点餐",
-    component: () => import("@/views/foods/index.vue"),
+    path: "/db",
+    name: "数据库验证页面",
+    component: () => import("@/views/db/index.vue"),
   },
   {
     path: "/list",

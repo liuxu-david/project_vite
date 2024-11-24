@@ -9,6 +9,9 @@
 
 <template>
   <div class="function">
+    <button class="db" @click="handleToPage('/db')">
+      跳转验证数据库页面
+    </button>
     <button class="list" @click="handleToPage('/list')">
       跳转虚拟列表页面
     </button>
@@ -38,7 +41,8 @@
     flex-direction: column;
     border-radius: 50px;
     margin-top: -20px;
-
+    
+    .db,
     .list,
     .list_extend,
     .refresh,
@@ -51,6 +55,7 @@
       font-size: 12px;
       border-radius: 5px;
     }
+    .list,
     .order,
     .refresh,
     .list_extend {
