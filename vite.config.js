@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
     //服务器选项配置
     server: {
       //port: 5173, //自定义启动服务端口号，默认值5173
-      //open: true, //启动服务后是否自动打开浏览器
+      open: true, //启动服务后是否自动打开浏览器
       cors: true, //为开发服务器配置cors，默认允许任何源
       proxy: {
         //为服务配置自定义代理规则
@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
         "/api": {
           target: env.VITE_APP_URL, //将/api开头的请求转发到这个地址上
           changeOrigin: true, //是否需要修改请求头的origin值，避免后端设置origin限制引起跨域问题
-          //rewrite: (path) => path.replace(/^\/api/, "/api"), //重写请求路径，这里/api/user会被转发到/user路径上
+          rewrite: (path) => path.replace(/^\/api/, "/api"), //重写请求路径，这里/api/user会被转发到/user路径上
         },
       },
     },
