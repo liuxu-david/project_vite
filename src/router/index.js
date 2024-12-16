@@ -40,6 +40,11 @@ const routes = [
     component: () => import('@/views/upload_files/main.vue'),
   },
   {
+    path: '/company',
+    name: '企业级文件上传下载',
+    component: () => import('@/views/company/index.vue'),
+  },
+  {
     path: '/refresh',
     name: '触底刷新页面',
     component: () => import('@/views/refresh/index.vue'),

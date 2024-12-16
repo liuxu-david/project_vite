@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { getAllInfo } from '@/service/db.js';
-import { uploadFile } from '@/service/test.js';
+// import { uploadFile } from '@/service/test.js';
 
 let data = ref([]);
 let fileListfileList = ref([]);
@@ -17,7 +17,7 @@ const customUpload = async (options) => {
   console.log(file);
   formData.append('aaa', file);
   try {
-    await uploadFile(formData);
+    // await uploadFile(formData);
   } catch (error) {
     console.log(error);
   }

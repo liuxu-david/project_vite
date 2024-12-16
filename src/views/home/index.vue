@@ -9,6 +9,9 @@
 
 <template>
   <div class="function">
+    <button class="company" @click="handleToPage('/company')">
+      企业级大数据量文件上传和下载
+    </button>
     <button class="db" @click="handleToPage('/db')">
       跳转验证数据库页面
     </button>
@@ -41,7 +44,8 @@
     flex-direction: column;
     border-radius: 50px;
     margin-top: -20px;
-    
+
+    .company,
     .db,
     .list,
     .list_extend,
@@ -55,6 +59,7 @@
       font-size: 12px;
       border-radius: 5px;
     }
+    .db,
     .list,
     .order,
     .refresh,

@@ -59,5 +59,8 @@ export default defineConfig(({ mode }) => {
       sourcemap: true, //是否生成sourcemap文件，默认false
       emptyOutDir: true, //构建时清理输出目录,如果输出目录在根目录下则默认为true
     },
+    worker:{
+      format: 'es'
+    }
   };
 });
