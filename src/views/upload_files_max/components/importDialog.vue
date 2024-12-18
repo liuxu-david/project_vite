@@ -20,7 +20,7 @@
 <script setup>
 import { UploadFilled } from "@element-plus/icons-vue";
 import { toRef, ref } from "vue";
-import { uploadFile } from "@/service/uploadMore";
+import { verifyFile_API, uploadFile_API } from "@/service/uploadMore";
 import pLimit from "p-limit";
 
 const props = defineProps({
@@ -59,21 +59,27 @@ const handleSliceFlie = (file, fileHash) => {
 };
 // 文件md5处理
 const handleFileHash = (file) => {
-    if (!file) return;
-    worker.value = new Worker(new URL("../worker.js", import.meta.url), {
-        type: "module",
+    return new Promise((resolve, reject) => {
+        if (!file) reject("没有文件");
+        worker.value = new Worker(new URL("../worker.js", import.meta.url), {
+            type: "module",
+        });
+        // 发送文件再webworker中进行md5处理
+        worker.value.postMessage(file);
+        worker.value.onmessage = (event) => {
+            // 1.主线程监听数据 加密
+            const fileHash = event.data;
+            console.log("🚀 ~ handleFileHash ~ fileHash:", fileHash);
+            resolve(fileHash);
+        };
     });
-    // 发送文件再webworker中进行md5处理
-    worker.value.postMessage(file);
-    worker.value.onmessage = (event) => {
-        // 主线程监听数据
-        const fileHash = event.data;
-        console.log("🚀 ~ handleFileHash ~ fileHash:", fileHash);
-        // 处理分片
-        const fileChunks = handleSliceFlie(file, fileHash);
-        console.log("🚀 ~ handleFileHash ~ fileChunks:", fileChunks);
-        // 发送验证请求
-    };
+};
+// 文件验证方法(返回需要上传的分片数组)
+const handleVerify = async (fileHash, fileChunks) => {
+    try {
+        const res = await verifyFile_API({ fileHash });
+        console.log(res);
+    } catch (error) {}
 };
 // 单个分片上传
 const handlefileChunk = async (chunk) => {
@@ -82,7 +88,7 @@ const handlefileChunk = async (chunk) => {
     formData.append("chunkfile", chunk.chunkfile);
     formData.append("fileHash", chunk.fileHash);
     try {
-        await uploadFile(formData);
+        await uploadFile_API(formData);
     } catch (error) {}
 };
 // 多个分片上传(如果分片过多需要控制高并发)
@@ -99,10 +105,17 @@ const handlefileChunks = async (chunks) => {
 };
 
 // 处理上传
-const handleUpload = (options) => {
+const handleUpload = async (options) => {
     const { file } = options;
     console.log("🚀 ~ handleUpload ~ file:", file);
-    handleFileHash(file);
+    const fileHash = await handleFileHash(file);
+    // 2.处理分片
+    const fileChunks = handleSliceFlie(file, fileHash);
+    console.log("🚀 ~ handleFileHash ~ fileChunks:", fileChunks);
+    // 3.发送验证请求
+    handleVerify(fileHash, fileChunks);
+    // 4.分片上传
+    // 5.合并分片
 };
 // 关闭弹窗
 const handleClose = () => {
