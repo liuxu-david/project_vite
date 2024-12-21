@@ -5,7 +5,12 @@
         width="800"
         @close="handleClose"
     >
-        <el-upload class="upload-demo" drag :http-request="handleUpload">
+        <el-upload
+            class="upload-demo"
+            drag
+            :show-file-list="false"
+            :http-request="handleUpload"
+        >
             <el-icon class="el-icon--upload"><upload-filled /></el-icon>
             <div class="el-upload__text">
                 拖动图片到这里或者 <em>点击上传</em>
@@ -33,7 +38,7 @@ const props = defineProps({
     key: String,
 });
 const visiable = toRef(props, "visiable");
-const emit = defineEmits();
+const emits = defineEmits(["update:visiable", "success"]);
 const worker = ref(null); //开启webworker任务
 const chunkSize = 1 * 1024 * 1024; //单个切片大小1M
 const maxLimit = 6; //控制高并发，同时不超过6个
@@ -115,6 +120,7 @@ const handleMergeFile = async (fileHash, totalChunksNum, name) => {
     try {
         const res = mergeFile_API({ fileHash, totalChunksNum, name });
         // 提示文件上传成功，文件开始写入数据库
+        return res;
     } catch (error) {}
 };
 
@@ -136,11 +142,12 @@ const handleUpload = async (options) => {
     // 5.分片上传
     await handlefileChunks(formatChunks);
     // 6.合并分片
-    await handleMergeFile(fileHash, fileChunks.length, file.name);
+    const res = await handleMergeFile(fileHash, fileChunks.length, file.name);
+    emits("success");
 };
 // 关闭弹窗
 const handleClose = () => {
-    emit("update:visiable", false);
+    emits("update:visiable", false);
 };
 </script>
 
