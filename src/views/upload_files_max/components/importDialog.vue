@@ -20,7 +20,11 @@
 <script setup>
 import { UploadFilled } from "@element-plus/icons-vue";
 import { toRef, ref } from "vue";
-import { verifyFile_API, uploadFile_API } from "@/service/uploadMore";
+import {
+    verifyFile_API,
+    uploadFile_API,
+    mergeFile_API,
+} from "@/service/uploadMore";
 import pLimit from "p-limit";
 
 const props = defineProps({
@@ -77,8 +81,8 @@ const handleFileHash = (file) => {
 // 文件验证方法(返回需要上传的分片数组)
 const handleVerify = async (fileHash, fileChunks) => {
     try {
-        const res = await verifyFile_API({ fileHash });
-        console.log(res);
+        const res = await verifyFile_API({ fileHash, fileChunks });
+        return res;
     } catch (error) {}
 };
 // 单个分片上传
@@ -93,14 +97,24 @@ const handlefileChunk = async (chunk) => {
 };
 // 多个分片上传(如果分片过多需要控制高并发)
 const handlefileChunks = async (chunks) => {
+    // if (!chunks.length) return;
     const uploadPromiseList = [];
     const limit = pLimit(maxLimit);
     chunks.forEach((chunk) => {
         uploadPromiseList.push(limit(() => handlefileChunk(chunk)));
     });
     try {
-        const result = await Promise.all(uploadPromiseList);
-        console.log("upload Success", result);
+        await Promise.all(uploadPromiseList);
+    } catch (error) {
+        // 文件上传失败，重新上传
+    }
+};
+
+// 文件合并
+const handleMergeFile = async (fileHash, totalChunksNum, name) => {
+    try {
+        const res = mergeFile_API({ fileHash, totalChunksNum, name });
+        // 提示文件上传成功，文件开始写入数据库
     } catch (error) {}
 };
 
@@ -113,9 +127,16 @@ const handleUpload = async (options) => {
     const fileChunks = handleSliceFlie(file, fileHash);
     console.log("🚀 ~ handleFileHash ~ fileChunks:", fileChunks);
     // 3.发送验证请求
-    handleVerify(fileHash, fileChunks);
-    // 4.分片上传
-    // 5.合并分片
+    const uploadedChunks = await handleVerify(fileHash, fileChunks);
+    console.log("🚀 ~ handleUpload ~ uploadedChunks:", uploadedChunks);
+    // 4.过滤掉已经存在的文件 (妙传)
+    const formatChunks = fileChunks.filter(
+        (chunk) => !uploadedChunks.includes(Number(chunk.id))
+    );
+    // 5.分片上传
+    await handlefileChunks(formatChunks);
+    // 6.合并分片
+    await handleMergeFile(fileHash, fileChunks.length, file.name);
 };
 // 关闭弹窗
 const handleClose = () => {

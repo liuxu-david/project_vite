@@ -20,3 +20,11 @@ export const uploadFile_API = (data) => {
         },
     });
 };
+
+export const mergeFile_API = (data) => {
+    return request({
+        url: "/api/upload/merge",
+        method: "POST",
+        data,
+    });
+};
