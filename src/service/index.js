@@ -21,6 +21,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // 对响应数据做点什么
+        console.log(response);
+
         return response.data.data;
     },
     (error) => {
