@@ -24,6 +24,7 @@
             <el-upload
                 ref="upload"
                 class="upload-demo"
+                :show-file-list="false"
                 :http-request="handleUpload"
             >
                 <template #trigger>
@@ -163,6 +164,10 @@ const handleUpload = async (options) => {
     }
     .operation {
         margin: 10px 0;
+    }
+    .upload-demo {
+        display: inline-block;
+        margin-left: 20px;
     }
 }
 </style>
