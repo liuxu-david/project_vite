@@ -1,9 +1,9 @@
 import { createApp } from "vue";
-// import "./style.css";
 import App from "./App.vue";
 import router from "./router/index.js";
 import "element-plus/dist/index.css";
 import copyDirectives from "./directives/copy.js";
+import "./style/index.less";
 
 console.log(import.meta.env.VITE_APP_URL);
 

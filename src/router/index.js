@@ -45,6 +45,11 @@ const routes = [
         component: () => import("@/views/upload_files_max/index.vue"),
     },
     {
+        path: "/theme",
+        name: "一键换肤",
+        component: () => import("@/views/change_theme/index.vue"),
+    },
+    {
         path: "/refresh",
         name: "触底刷新页面",
         component: () => import("@/views/refresh/index.vue"),
