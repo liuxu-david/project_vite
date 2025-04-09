@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { uploadFile } from '@/service/uploadMore.js';
+// import { uploadFile } from '@/service/uploadMore.js';
 import { ref } from 'vue';
 
 const fileList = ref([]);

@@ -13,7 +13,7 @@ import { changeTheme } from "@/utils/changeTheme";
         <button class="test-btn">测试按钮</button>
     </div>
 </template>
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .test-theme {
     width: 200px;
     height: 200px;

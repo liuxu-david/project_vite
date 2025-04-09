@@ -3,7 +3,8 @@ import App from "./App.vue";
 import router from "./router/index.js";
 import "element-plus/dist/index.css";
 import copyDirectives from "./directives/copy.js";
-import "./style/index.less";
+// import "./style/index.less";
+import "./style/themes.scss";
 
 console.log(import.meta.env.VITE_APP_URL);
 
