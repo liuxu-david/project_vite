@@ -11,7 +11,7 @@ jobs:
               uses: actions/checkout@main
 
             - name: Build and Deploy
-              uses: JamesIves/github-pages-deploy-action@main
+              uses: JamesIves/github-pages-deploy-action@v4.3.3
               env:
                   ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
                   BRANCH: pre
