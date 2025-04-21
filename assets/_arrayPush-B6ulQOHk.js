@@ -1,0 +1,2 @@
+import{aU as s,aV as i}from"./index-v_L5LVSG.js";var g=9007199254740991;function m(r){return typeof r=="number"&&r>-1&&r%1==0&&r<=g}var p="[object Arguments]";function n(r){return s(r)&&i(r)==p}var a=Object.prototype,u=a.hasOwnProperty,b=a.propertyIsEnumerable,h=n(function(){return arguments}())?n:function(r){return s(r)&&u.call(r,"callee")&&!b.call(r,"callee")};function l(r,e){for(var t=-1,o=e.length,c=r.length;++t<o;)r[c+t]=e[t];return r}export{l as a,m as b,h as i};
+//# sourceMappingURL=_arrayPush-B6ulQOHk.js.map
