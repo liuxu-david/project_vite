@@ -50,7 +50,7 @@ export default defineConfig(({ mode }) => {
                 },
             },
         },
-        base: "./",
+        base: "/project_vite/",
         // 构建配置
         build: {
             target: "modules", //最终构建的浏览器兼容目标,默认modules
