@@ -1,4 +1,4 @@
-name: GitHub Actions Build
+name: 测试环境-自动部署
 on:
     push:
         branches:
