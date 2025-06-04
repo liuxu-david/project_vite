@@ -75,7 +75,7 @@
       height: 30px;
       width: 300px;
       border: 1px solid green;
-      margin-left: -10px;
+      margin-left: -40px;
       list-style: none;
       display: flex;
       justify-content: center;
