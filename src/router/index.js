@@ -58,6 +58,11 @@ const routes = [
         name: "触底刷新页面",
         component: () => import("@/views/refresh/index.vue"),
     },
+    {
+        path: "/monitor",
+        name: "前端监控",
+        component: () => import("@/views/monitor/index.vue"),
+    },
 ];
 
 const router = createRouter({

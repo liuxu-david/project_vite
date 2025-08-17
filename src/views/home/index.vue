@@ -31,6 +31,9 @@ const handleToPage = (url) => {
         <button class="order" @click="handleToPage('/components')">
             跳转组件封装页面
         </button>
+        <button class="order" @click="handleToPage('/monitor')">
+            跳转前端监控页面
+        </button>
     </div>
 </template>
 
@@ -68,7 +71,7 @@ const handleToPage = (url) => {
     .refresh,
     .list_extend {
         display: block;
-        margin-top: 50px;
+        margin-top: 10px;
     }
 }
 </style>
