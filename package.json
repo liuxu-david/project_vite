@@ -14,6 +14,7 @@
         "axios": "^1.7.2",
         "element-plus": "^2.8.5",
         "p-limit": "^6.1.0",
+        "project_monitor": "link:project_monitor",
         "spark-md5": "^3.0.2",
         "vue": "^3.4.29",
         "vue-router": "^4.4.0"

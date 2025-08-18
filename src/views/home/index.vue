@@ -48,6 +48,7 @@ const handleToPage = (url) => {
     flex-direction: column;
     border-radius: 50px;
     margin-top: -20px;
+    margin: auto;
 
     .theme,
     .company,

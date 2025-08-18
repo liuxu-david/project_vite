@@ -8,7 +8,7 @@ const handleJsError = () => {
 };
 
 const handlePromiseError = () => {
-    Promise.reject("promise error");
+    Promise.reject(new Error("promise error"));
 };
 
 let img = ref(logo);
