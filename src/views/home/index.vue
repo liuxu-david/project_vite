@@ -19,6 +19,9 @@ const handleToPage = (url) => {
         <button class="list" @click="handleToPage('/list')">
             跳转虚拟列表页面
         </button>
+        <button class="list_max" @click="handleToPage('/list_max')">
+            跳转不定高度虚拟列表页面
+        </button>
         <button class="list_extend" @click="handleToPage('/list_extend')">
             跳转时间分片页面
         </button>
@@ -54,6 +57,7 @@ const handleToPage = (url) => {
     .company,
     .db,
     .list,
+    .list_max,
     .list_extend,
     .refresh,
     .order,
@@ -68,6 +72,7 @@ const handleToPage = (url) => {
     .company,
     .db,
     .list,
+    .list_max,
     .order,
     .refresh,
     .list_extend {

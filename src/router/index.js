@@ -34,6 +34,15 @@ const routes = [
         },
     },
     {
+        path: "/list_max",
+        name: "不定高度虚拟列表",
+        component: () => import("@/views/list/index_max.vue"),
+        beforeEnter: (to, from) => {
+            console.log("执行了路由独享守卫");
+            document.title = "路由独享守卫";
+        },
+    },
+    {
         path: "/list_extend",
         name: "虚拟列表拓展",
         component: () => import("@/views/list_extend/index.vue"),
