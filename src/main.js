@@ -7,7 +7,7 @@ import copyDirectives from "./directives/copy.js";
 import "./style/themes.scss";
 import monitor from "project_monitor"
 
-console.log(import.meta.env.VITE_APP_URL);
+console.log("当前所处与环境",import.meta.env.VITE_PROJECT_ENV);
 
 const app = createApp(App);
 app.use(router);
